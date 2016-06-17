@@ -276,10 +276,7 @@ Status CreateRetryingBasicBatchScheduler(
   std::unique_ptr<BasicBatchScheduler<TaskType>> basic_scheduler;
   TF_RETURN_IF_ERROR(BasicBatchScheduler<TaskType>::Create(
       schedule_options, process_batch_callback, &basic_scheduler));
-  std::unique_ptr<BatchSchedulerRetrier<TaskType>> retrier;
-  TF_RETURN_IF_ERROR(BatchSchedulerRetrier<TaskType>::Create(
-      retry_options, std::move(basic_scheduler), &retrier));
-  *scheduler = std::move(retrier);
+  *scheduler = std::move(basic_scheduler);
   return Status::OK();
 }
 
